@@ -23,7 +23,7 @@ class MainView : View("My View") {
                     field("Date of Birth:") {
 
 
-
+                              datepicker(model.birthday)
                     }
                     button("Save").action {
                       //  enableWhen(model.dirty)
@@ -47,7 +47,7 @@ class MainView : View("My View") {
               
 
                 column("Title",Person::titleProperty)
-                column("date",Person::brith)
+                column("date",Person::birthdayProperty)
                 model.rebindOnChange(this){
                     selectedPerson -> item =selectedPerson ?: Person()
                 }
@@ -72,13 +72,13 @@ class PersonModel(person : Person): ItemViewModel<Person>(person){
     val birthday = bind(Person::birthdayProperty)
 
 }
-class	Person(name: String? = null, title: String? = null, birthday: LocalDate?=null)	{
+class	Person(name: String? = null, title: String? = null, birthday: LocalDate= LocalDate.of(2019,10,15))	{
 
     /* var idProperty	=	id
 
      var nameProperty	=	name*/
 
-     val	birthdayProperty:SimpleObjectProperty<LocalDate?> =SimpleObjectProperty(this,"brith",birthday)
+     val	birthdayProperty:SimpleObjectProperty<LocalDate> =SimpleObjectProperty(this,"brith",birthday)
     var brith by birthdayProperty
     
     val	nameProperty : SimpleStringProperty =	SimpleStringProperty(this,"name",name)
@@ -97,4 +97,6 @@ class	Person(name: String? = null, title: String? = null, birthday: LocalDate?=n
 
     private operator fun SimpleStringProperty.getValue(person: Person, property: KProperty<*>): Any {
         return property
-    }}
+    }
+
+}
